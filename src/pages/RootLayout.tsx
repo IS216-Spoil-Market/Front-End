@@ -1,4 +1,4 @@
-import { AppBar } from "@mui/material";
+import AppBar from "../components/common/nav/AppBar";
 import React from "react";
 import { Outlet } from "react-router-dom";
 
@@ -7,7 +7,7 @@ interface RootLayoutProps {}
 const RootLayout: React.FC<RootLayoutProps> = ({}) => {
     return (
         <>
-            <AppBar />
+            <AppBar position="static"/>
             <Outlet />
         </>
     );
