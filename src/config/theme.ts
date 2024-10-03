@@ -1,24 +1,11 @@
 import { createTheme } from "@mui/material/styles";
-// import BebasNueue from "../fonts/bebas-neue/BebasNeue.woff2";
-// import CircularSpotifyLight from "../fonts/circular-spotify/CircularSpotifyTextLight.woff2";
-// import CircularSpotifyBold from "../fonts/circular-spotify/CircularSpotifyTextBold.woff2";
-// import Lato from "../fonts/lato/Lato-Regular.woff2";
-// import LatoBold from "../fonts/lato/Lato-Bold.woff2";
-// import LatoSemiboldItalic from "../fonts/lato/Lato-SemiBoldItalic.woff2";
-
-
-/**
- * Modify the types for the Typography module to remove h4, h5, h6, caption and overline
- */
-declare module "@mui/material/Typography" {
-    interface TypographyPropsVariantOverrides {
-        h4: false;
-        h5: false;
-        h6: false;
-        caption: false;
-        overline: false;
-    }
-}
+import ClashDisplayBold from "../assets/fonts/ClashDisplay-Bold.woff2";
+import ClashDisplayExtralight from "../assets/fonts/ClashDisplay-Extralight.woff2";
+import ClashDisplayLight from "../assets/fonts/ClashDisplay-Light.woff2";
+import ClashDisplayMedium from "../assets/fonts/ClashDisplay-Medium.woff2";
+import ClashDisplayRegular from "../assets/fonts/ClashDisplay-Regular.woff2";
+import ClashDisplaySemibold from "../assets/fonts/ClashDisplay-Semibold.woff2";
+import { indigo, pink } from "@mui/material/colors";
 
 const theme = createTheme();
 
@@ -33,33 +20,30 @@ const theme = createTheme();
  */
 export default createTheme({
     palette: {
-        // primary: {
-        //     main: "#651FFF",
-        //     light: "#834BFF",
-        //     dark: "#4615B2",
-        //     contrastText: "#fff",
-        // },
+        primary: {
+            main: indigo["A400"],
+            light: indigo["A200"],
+            dark: indigo[700],
+            contrastText: "#fff",
+        },
 
-        // secondary: {
-        //     main: "#00B0FF",
-        //     light: "#33BFFF",
-        //     dark: "#007BB2",
-        //     contrastText: "#fff",
-        // },
+        secondary: {
+            main: pink[500],
+            light: pink[300],
+            dark: pink[700],
+            contrastText: "#fff",
+        },
     },
 
     typography: {
-        fontFamily: ["BebasNueue", "CircularSpotify", "Lato"].join(","),
+        fontFamily: "ClashDisplay",
 
         allVariants: {
-            textTransform: "none",
+            fontFamily: "ClashDisplay",
         },
 
         h1: {
-            fontFamily: "BebasNueue",
-            fontWeight: "400",
-            textTransform: "uppercase",
-            textAlign: "left",            fontSize: "3rem",
+            fontSize: "3rem",
             [theme.breakpoints.down("md")]: {
                 fontSize: "2.5rem",
             },
@@ -69,10 +53,7 @@ export default createTheme({
         },
 
         h2: {
-            fontFamily: "BebasNueue",
-            fontWeight: "400",
-            textTransform: "uppercase",
-            textAlign: "left",            fontSize: "2.25rem",
+            fontSize: "2.25rem",
             [theme.breakpoints.down("md")]: {
                 fontSize: "2rem",
             },
@@ -82,10 +63,7 @@ export default createTheme({
         },
 
         h3: {
-            fontFamily: "BebasNueue",
-            fontWeight: "400",
-            textTransform: "uppercase",
-            textAlign: "left",            fontSize: "2rem",
+            fontSize: "2rem",
             [theme.breakpoints.down("md")]: {
                 fontSize: "1.7rem",
             },
@@ -94,127 +72,126 @@ export default createTheme({
             },
         },
 
-        h4: undefined,
-        h5: undefined,
-        h6: undefined,
+        h4: {
+            fontSize: "1.75rem",
+            [theme.breakpoints.down("md")]: {
+                fontSize: "1.5rem",
+            },
+            [theme.breakpoints.down("sm")]: {
+                fontSize: "1.3rem",
+            },
+        },
 
         button: {
-            fontFamily: "CircularSpotify",
-            fontWeight: "bold",
             fontSize: "0.9375rem",
             [theme.breakpoints.down("md")]: {
                 fontSize: "0.8rem",
             },
             [theme.breakpoints.down("sm")]: {
                 fontSize: "0.7rem",
-            }
+            },
         },
 
         body1: {
-            fontFamily: "CircularSpotify",
             fontSize: "1.25rem",
             [theme.breakpoints.down("md")]: {
                 fontSize: "1.05rem",
             },
             [theme.breakpoints.down("sm")]: {
                 fontSize: "0.9rem",
-            }
+            },
         },
 
         body2: {
-            fontFamily: "CircularSpotify",
             fontSize: "0.9375rem",
             [theme.breakpoints.down("md")]: {
                 fontSize: "0.8rem",
             },
             [theme.breakpoints.down("sm")]: {
                 fontSize: "0.7rem",
-            }
+            },
         },
 
         subtitle1: {
-            fontFamily: "Lato",
             fontSize: "1rem",
             [theme.breakpoints.down("md")]: {
                 fontSize: "0.85rem",
             },
             [theme.breakpoints.down("sm")]: {
                 fontSize: "0.65rem",
-            }
+            },
         },
 
         subtitle2: {
-            fontFamily: "Lato",
             fontSize: "0.75rem",
             [theme.breakpoints.down("md")]: {
                 fontSize: "0.7rem",
             },
             [theme.breakpoints.down("sm")]: {
                 fontSize: "0.65rem",
-            }
+            },
         },
 
         caption: {
-            fontFamily: "Lato",
             fontSize: "0.75rem",
             [theme.breakpoints.down("md")]: {
                 fontSize: "0.7rem",
             },
             [theme.breakpoints.down("sm")]: {
                 fontSize: "0.65rem",
-            }
+            },
         },
         overline: undefined,
     },
 
-    // components: {
-    //     MuiCssBaseline: {
-    //         /**
-    //          * The following styles overrides declares the custom fonts used in the application
-    //          */
-    //         styleOverrides: `
-    //             @font-face {
-    //                 font-family: 'CircularSpotify';
-    //                 src: url(${CircularSpotifyBold}) format('woff2');
-    //                 font-weight: bold;
-    //                 font-style: normal;
-    //             }
-                
-    //             @font-face {
-    //                 font-family: 'CircularSpotify';
-    //                 src: url(${CircularSpotifyLight}) format('woff2');
-    //                 font-weight: normal;
-    //                 font-style: normal;
-    //             }
-                
-    //             @font-face {
-    //                 font-family: 'BebasNueue';
-    //                 src: url(${BebasNueue}) format('woff2');
-    //                 font-weight: normal;
-    //                 font-style: normal;
-    //             }
-                
-    //             @font-face {
-    //                 font-family: 'Lato';
-    //                 src: url(${LatoBold}) format('woff2');
-    //                 font-weight: bold;
-    //                 font-style: normal;
-    //             }
-                
-    //             @font-face {
-    //                 font-family: 'Lato';
-    //                 src: url(${Lato}) format('woff2');
-    //                 font-weight: normal;
-    //                 font-style: normal;
-    //             }
-                
-    //             @font-face {
-    //                 font-family: 'Lato';
-    //                 src: url(${LatoSemiboldItalic} format('woff2');
-    //                 font-weight: 500;
-    //                 font-style: italic;
-    //             }
-    //         `,
-    //     },
-    // },
+    components: {
+        MuiCssBaseline: {
+            /**
+             * The following styles overrides declares the custom fonts used in the application
+             */
+            styleOverrides: `
+                @font-face {
+                    font-family: 'ClashDisplay';
+                    src: url(${ClashDisplayBold}) format('woff2');
+                    font-weight: 700;
+                    font-style: normal;
+                }
+
+                @font-face {
+                    font-family: 'ClashDisplay';
+                    src: url(${ClashDisplaySemibold}) format('woff2');
+                    font-weight: 600;
+                    font-style: normal;
+                }
+
+                @font-face {
+                    font-family: 'ClashDisplay';
+                    src: url(${ClashDisplayMedium}) format('woff2');
+                    font-weight: 500;
+                    font-style: normal;
+                }
+
+                @font-face {
+                    font-family: 'ClashDisplay';
+                    src: url(${ClashDisplayRegular}) format('woff2');
+                    font-weight: 400;
+                    font-style: normal;
+                }
+
+                @font-face {
+                    font-family: 'ClashDisplay';
+                    src: url(${ClashDisplayLight}) format('woff2');
+                    font-weight: 300;
+                    font-style: normal;
+                }
+
+                @font-face {
+                    font-family: 'ClashDisplay';
+                    src: url(${ClashDisplayExtralight}) format('woff2');
+                    font-weight: 200;
+                    font-style: normal;
+                }
+            `,
+        },
+    },
 });
