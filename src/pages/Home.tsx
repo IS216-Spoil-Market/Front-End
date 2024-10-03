@@ -1,11 +1,17 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import React from "react";
 import AppBar from "../components/common/nav/AppBar";
+import Heading3 from "../components/common/heading/Heading3";
+import Heading4 from "../components/common/heading/Heading4";
 
 const Home: React.FC = () => {
     return (
-        <div style={{backgroundColor: "black"}}>
-            <AppBar position="absolute"/>
+        <>
+            <Box sx={{ height: 200, background: "purple" }}>
+                <AppBar invisBg />
+            </Box>
+            <Heading3>Heading 3</Heading3>
+            <Heading4>Heading 4</Heading4>
             <Typography variant="h1">Heading 1</Typography>
             <Typography variant="h2">Heading 2</Typography>
             <Typography variant="h3">Heading 3</Typography>
@@ -18,7 +24,7 @@ const Home: React.FC = () => {
             <Typography variant="subtitle2">Subtitle 2</Typography>
             <Typography variant="caption">Caption</Typography>
             <Typography variant="overline">Overline</Typography>
-        </div>
+        </>
     );
 };
 
