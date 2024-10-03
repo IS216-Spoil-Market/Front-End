@@ -7,7 +7,7 @@ interface RootLayoutProps {}
 const RootLayout: React.FC<RootLayoutProps> = ({}) => {
     return (
         <>
-            <AppBar position="static"/>
+            <AppBar />
             <Outlet />
         </>
     );

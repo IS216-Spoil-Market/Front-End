@@ -17,7 +17,7 @@ import SwaplyLogo from "../../../assets/images/logo/white.png";
 import { useNavigate } from "react-router-dom";
 
 interface AppBarProps {
-    position: "absolute" | "static";
+    invisBg?: boolean;
 }
 
 const pages = [
@@ -35,7 +35,7 @@ const pages = [
     },
 ];
 
-const AppBar: React.FC<AppBarProps> = ({ position }) => {
+const AppBar: React.FC<AppBarProps> = ({ invisBg }) => {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null
     );
@@ -43,12 +43,8 @@ const AppBar: React.FC<AppBarProps> = ({ position }) => {
 
     return (
         <MuiAppBar
-            sx={
-                position === "static"
-                    ? {}
-                    : { bgcolor: "rgba(0,0,0,0)", boxShadow: "none" }
-            }
-            position={position}
+            sx={invisBg ? { bgcolor: "rgba(0,0,0,0)", boxShadow: "none" } : {}}
+            position="static"
         >
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
