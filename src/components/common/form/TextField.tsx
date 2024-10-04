@@ -4,10 +4,7 @@ import {
     InputAdornment,
     TextField as MuiTextField,
 } from "@mui/material";
-import {
-    useFormContext,
-    Controller,
-} from "react-hook-form";
+import { useFormContext, Controller } from "react-hook-form";
 import { SvgIconComponent } from "@mui/icons-material";
 
 interface TextFieldProps extends BaseTextFieldProps {
@@ -17,11 +14,11 @@ interface TextFieldProps extends BaseTextFieldProps {
 
 /**
  * An extension of the MUI TextField with Controller wrapping it, please make sure to wrap it around react-hook-form's FormProvider component.
- * 
+ *
  * Please use alongside Zod for validation of these fields.
- * 
+ *
  * Accepts additional props under the BaseTextFieldProps by MUI types
- * 
+ *
  * @param {string?} name Represents the "key" of the value of the field, defaults to "text field"
  * @param {string | ReactNode} label A label displayed to the user to indicate the purpose of the field
  * @param {React.HTMLInputTypeAttribute?} type To indicate type of input data such as "number", "password" etc, defaults to "text"
@@ -29,7 +26,7 @@ interface TextFieldProps extends BaseTextFieldProps {
  * @param {MUIIcon} Icon Indicates an icon appended at "iconPosition" of the text field
  * @param {"end" | "start" | undefined} iconPosition Indicates the position to place the "Icon" stated
  * @param {SxProps<Theme>?} sx Additional styles to be applied on top of the ones by MUI
- * 
+ *
  * @returns {ReactNode} Returns an MUI TextField
  */
 
@@ -47,12 +44,12 @@ const TextField: React.FC<TextFieldProps> = ({
 
     return (
         <Controller
-            {...props}
             control={control}
             defaultValue=""
             name={name ? name : "text field"}
             render={({ field, fieldState }) => (
                 <MuiTextField
+                    {...props}
                     {...field}
                     sx={sx}
                     error={Boolean(fieldState.error)}
