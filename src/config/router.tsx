@@ -8,13 +8,13 @@ import RootLayout from "../pages/RootLayout";
 
 export default createBrowserRouter([
     { path: "/", element: <Home /> },
-    { path: "/user", element: <UserListing /> },
     {
         path: "/",
         element: <RootLayout />,
         children: [
             { path: "/chat", element: <Chats /> },
             { path: "/user/:id", element: <UserDetails /> },
+            { path: "/user", element: <UserListing /> },
             { path: "/profile", element: <Profile /> },
         ],
     },
