@@ -1,185 +1,186 @@
 import React, { useState } from "react";
-import { Container, Box, Typography, Button, Divider, Card, CardContent, Grid, TextField, Avatar, Rating, Chip } from "@mui/material";
-import Placeholder from "../../assets/images/user/hero-banner.jpg";
-import Heading3 from "../../components/common/heading/Heading3";
-import { reviewSchema } from "../../zod-schema/reviewSchema";
-import dayjs from "dayjs";
+import { Container, Box, TextField, Typography, Card, Grid, CardContent, Chip, Avatar } from "@mui/material";
+import { Link } from 'react-router-dom';
+import SearchIcon from '@mui/icons-material/Search';
+import StarRating from '../../components/star';
+import heroBanner from '../../assets/images/user/hero-banner.jpg';
+import AppBar from "../../components/common/nav/AppBar";
 
-interface Review {
-    reviewContent: string;
-    rating: number;
-    date: string;
-}
+interface UserListingProps { }
 
-const UserDetails: React.FC = () => {
-    const [reviewContent, setReviewContent] = useState("");
-    const [rating, setRating] = useState<number | null>(null);
-    const [reviews, setReviews] = useState<Review[]>([]);
-    const [error, setError] = useState<string | null>(null);
+const reviews = [
+    {
+        name: "John Doe",
+        skill: "Mobile App Development",
+        text: "A Frontend developer who has been looking for jobs for ages but still cannot land a single job because the OA involved dp for all jobs I wanted for some reasons.",
+        rating: 3.5,
+        image: "/path/to/image.jpg",
+    },
+    {
+        name: "Jane Smith",
+        skill: "Web Development",
+        text: "A passionate web developer always looking for opportunities to learn and grow.",
+        rating: 4,
+        image: "/path/to/image2jpg",
+    },
+    {
+        name: "Tan Lee Xin",
+        skill: "Web Development",
+        text: "WOW A passionate xiao ding dong always looking for opportunities to disturb people and hehehaha.",
+        rating: 4,
+        image: "/path/to/image2.jpg",
+    },
+    {
+        name: "Ding Dong Ling Long",
+        skill: "UIUX",
+        text: "WOW A passionate xiao ding dong always looking for opportunities to disturb people and hehehaha.",
+        rating: 4,
+        image: "/path/to/image2.jpg",
+    },
+];
 
-    const postReview = () => {
-        const reviewData = {
-            review: reviewContent,
-            rating: rating || 0,
-            date: dayjs().format("DD/MM/YYYY HH:mm"),
-        };
 
-        const validation = reviewSchema.safeParse(reviewData);
+const UserListing: React.FC<UserListingProps> = ({ }) => {
+    const [searchTerm, setSearchTerm] = useState('');
 
-        if (!validation.success) {
-            setError(validation.error.errors[0].message);
-        } else {
-            const newReview: Review = {
-                reviewContent: validation.data.review,
-                rating: validation.data.rating,
-                date: validation.data.date,
-            };
+    const filteredReviews = reviews.filter(review =>
+        review.skill.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
-            setReviews([...reviews, newReview]);
-            setReviewContent("");
-            setRating(null);
-            setError(null);
+    const renderReviews = () => {
+        if (filteredReviews.length === 0 && searchTerm) {
+            return (
+                <Typography variant="body1" sx={{ textAlign: 'center', color: 'gray' }}>
+                    No reviews found for "{searchTerm}".
+                </Typography>
+            );
+        } else if (filteredReviews.length > 0 && searchTerm) {
+            return (
+                <Grid container spacing={4} >
+                    {
+                        filteredReviews.map((review, index) => (
+                            <Grid item xs={12} sm={12} lg={6} >
+                                <Link to="/user/:id" style={{ textDecoration: 'none' }}>
+                                    <Card key={index} sx={{ mb: 2 }}>
+                                        <CardContent>
+                                            <Box sx={{ display: "flex", flexDirection: { xs: 'column', sm: 'row' }, alignItems: { xs: 'center', sm: 'flex-start' }, }}>
+
+                                                <Box sx={{
+                                                    mr: { sm: 2 },
+                                                    mb: { xs: 2, sm: 0 },
+                                                    display: 'flex',
+                                                    flexDirection: 'column',
+                                                    alignItems: 'center'
+                                                }}>
+                                                    <Avatar src={review.image} alt={review.name} sx={{ width: 100, height: 100 }} />
+                                                    <StarRating rating={review.rating} sx={{ pt: { xs: 2, sm: 4 } }} /> {/* Assuming StarRating is aligned under the avatar */}
+                                                </Box>
+
+                                                <Box sx={{ flexGrow: 1 }}>
+                                                    <Box
+                                                        sx={{
+                                                            display: 'flex',
+                                                            flexDirection: { xs: 'column', sm: 'row' },
+                                                            justifyContent: 'space-between',
+                                                            alignItems: 'center',
+                                                        }}
+                                                    >
+                                                        <Typography variant="body1"
+                                                            sx={{
+                                                                fontSize: '1.5rem',
+                                                                color: "#303F9F"
+                                                            }}>
+                                                            {review.name}
+                                                        </Typography>
+                                                        <Chip
+                                                            label={review.skill}
+                                                            sx={{
+                                                                borderRadius: 5,
+                                                                backgroundColor: '#3D5AFE',
+                                                                color: 'white',
+
+                                                            }}
+                                                        />
+                                                    </Box>
+                                                    <Typography variant="body2" sx={{ mt: 1, fontSize: '1rem' }}>
+                                                        {review.text}
+                                                    </Typography>
+                                                </Box>
+                                            </Box>
+
+                                        </CardContent>
+                                    </Card>
+                                </Link>
+                            </Grid>
+                        ))
+                    }
+                </Grid >
+            )
         }
     };
-
     return (
-        <Container maxWidth="lg" sx={{ my: 4 }}>
+
+        <>
             <Box
-                justifyContent={{ xs: "center", s: "center", md: "flex-start" }}
-                mb={{ xs: 5, md: 4 }}
+                sx={{
+                    mb: { xs: 5, sm: 4 },
+                    alignItems: 'center',
+                    textAlign: 'center',
+                    backgroundImage: `url(${heroBanner})`,
+                    backgroundSize: 'cover',
+                 pb:14
+                }}
             >
-                <Grid container spacing={4}>
-                    {/* LHS PFP, name, rating */}
-                    <Grid item xs={12} md={2} textAlign="center">
-                        <img
-                            src={Placeholder}
-                            alt="User Profile"
-                            style={{
-                                borderRadius: "50%",
-                                width: "150px",
-                                height: "150px",
-                                objectFit: "cover",
-                            }}
-                        />
-                        <Typography variant="h4" fontWeight="600">John Doe</Typography>
-                        <Box display="flex" justifyContent="center" alignItems="center" mt={1} mb={2}>
-                            <Rating value={2.5} precision={0.5} readOnly />
-                            <Typography variant="body1" sx={{ ml: 1 }}>2.5</Typography>
-                        </Box>
-                        <Button variant="contained" size="large" color="primary">
-                            Barter Now
-                        </Button>
-                    </Grid>
+                <AppBar invisBg />
 
-                    {/* RHS mentoring & looking for */}
-                    <Grid item xs={12} md={10}>
-                        <Box>
-                            <Heading3>Mentoring for</Heading3>
-                            <Grid container spacing={1}>
-                                {["Social Media Marketing", "Social Media Marketing", "Web Design", "Web Design", "Computer Graphics", "Computer Graphics"].map((label, index) => (
-                                    <Grid item key={index}>
-                                        <Chip label={label} color="primary" />
-                                    </Grid>
-                                ))}
-                            </Grid>
-                        </Box>
+                <Typography variant="h3" sx={{
+                    color: 'white',
+                    fontSize: {
+                        xs: '2.5rem',
+                        sm: '2.5rem',
+                    },
+                    textAlign: 'center', // Center the text
+                    whiteSpace: { xs: 'normal', sm: 'nowrap' },
+                }}> Grow with Swaply</Typography>
 
-                        <Box mt={4}>
-                            <Heading3>Looking for</Heading3>
-                            <Grid container spacing={1}>
-                                {["Social Media Marketing", "Social Media Marketing", "Web Design", "Web Design", "Computer Graphics", "Computer Graphics"].map((label, index) => (
-                                    <Grid item key={index}>
-                                        <Chip label={label} color="secondary" />
-                                    </Grid>
-                                ))}
-                            </Grid>
-                        </Box>
-                    </Grid>
-                </Grid>
+                <Typography variant="subtitle1" sx={{
+                    color: 'white',
+                    fontSize: '1rem',
+                }}>Trade skills grow together effortlessly</Typography>
+                <TextField
+                    variant="outlined"
+                    placeholder="What skills are you learning today?"
+                    value={searchTerm} // Set the value to the search term state
+                    onChange={(event) => setSearchTerm(event.target.value)}
+
+                    sx={{
+                        borderRadius: '25px',
+                        width: { xs: '80%', sm: '65%' },
+                        mt: { xs: 6, sm: 8 },
+                        backgroundColor: '#fff',
+                        '& .MuiOutlinedInput-root': {
+                            borderRadius: '25px',
+                        },
+                        '& .MuiInputBase-input': {
+                            padding: '10px 20px',
+                        },
+
+
+                    }}
+                    InputProps={{
+                        startAdornment: (
+                            <SearchIcon style={{ marginRight: '10px', color: '#aaa' }} />
+                        ),
+                    }}
+                />
             </Box>
-            <Divider />
+            <Container>
+                {renderReviews()}
+            </Container>
 
-            {/* Reviews */}
-            <Box mt={4}>
-                <Heading3>Reviews</Heading3>
-                <Grid item width="100%" sm={12} md={12}>
-                    <Card>
-                        <CardContent>
-                            <Grid>
-                                <Typography variant="h6">Leave a Review</Typography>
-                                <Divider />
-
-                                <Grid container direction="row">
-                                    {/* profile pic */}
-                                    <Grid xs={2} margin={2} item>
-                                        <Avatar
-                                            sx={{
-                                                bgcolor: 'grey',
-                                                width: 80,
-                                                height: 80
-                                            }}
-                                        >OP</Avatar>
-                                    </Grid>
-
-                                    {/* right top section */}
-                                    <Grid xs={9} item>
-                                        <Grid item container direction="row" sm={12} md={12} mt={2}>
-                                            <Typography variant="body1">Your Rating</Typography>
-                                            <Rating
-                                                precision={0.5}
-                                                value={rating}
-                                                onChange={(event, newValue) => setRating(newValue)}
-                                            />
-                                        </Grid>
-                                        <Grid>
-                                            <TextField
-                                                fullWidth
-                                                variant="standard"
-                                                label="Your Review"
-                                                name="review"
-                                                value={reviewContent}
-                                                error={!!error}
-                                                helperText={error}
-                                                onChange={(event) => setReviewContent(event.target.value)}
-                                            />
-                                        </Grid>
-                                    </Grid>
-
-                                    <Grid xs={12} item>
-                                        <Button
-                                            variant="contained"
-                                            size="large"
-                                            color="secondary"
-                                            sx={{ ml: "auto", display: "block" }}
-                                            onClick={postReview}
-                                        >
-                                            Post Review
-                                        </Button>
-                                    </Grid>
-
-                                    {/* User's scrollable reviews */}
-                                    <Grid xs={12} item>
-                                        {reviews.map((review, index) => (
-                                            <Box key={index} mt={2}>
-                                                <Rating value={review.rating} precision={0.5} readOnly />
-                                                <Typography variant="caption" color="textSecondary">
-                                                    {review.date}
-                                                </Typography>
-                                                <Typography variant="body1">
-                                                    {review.reviewContent}
-                                                </Typography>
-                                                <Divider sx={{ mt: 2 }} />
-                                            </Box>
-                                        ))}
-                                    </Grid>
-                                </Grid>
-                            </Grid>
-                        </CardContent>
-                    </Card>
-                </Grid>
-            </Box>
-        </Container>
+        </>
     );
 };
 
-export default UserDetails;
+export default UserListing;
+
