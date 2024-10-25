@@ -1,4 +1,4 @@
-import { Box, Container, Fab } from "@mui/material";
+import { Box, Button, Container, Fab } from "@mui/material";
 import React from "react";
 import Heading3 from "../components/common/heading/Heading3";
 import ProfileMainSection from "../components/profile/section/ProfileMainSection";
@@ -7,10 +7,12 @@ import { SaveRounded } from "@mui/icons-material";
 import SkillsSection from "../components/profile/section/SkillsSection";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { profileSchema } from "../zod-schema/profileSchema";
+import { useAuth0 } from "@auth0/auth0-react";
 
 interface ProfileProps {}
 
 const Profile: React.FC<ProfileProps> = ({}) => {
+    const { logout } = useAuth0();
     const formState = useForm({
         resolver: zodResolver(profileSchema),
     });
@@ -38,6 +40,14 @@ const Profile: React.FC<ProfileProps> = ({}) => {
                 Save
                 <SaveRounded sx={{ ml: 1 }} />
             </Fab>
+            <Button
+                variant="contained"
+                color="error"
+                size="large"
+                onClick={() => logout()}
+            >
+                Logout
+            </Button>
         </Container>
     );
 };
