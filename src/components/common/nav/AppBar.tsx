@@ -82,16 +82,19 @@ const AppBar: React.FC<AppBarProps> = ({ invisBg }) => {
                             }}
                             sx={{ display: { xs: "block", md: "none" } }}
                         >
-                            {pages.map(({ name, route }) => (
-                                <MenuItem
-                                    key={name}
-                                    onClick={() => navigate(route)}
-                                >
-                                    <Typography sx={{ textAlign: "center" }}>
-                                        {name}
-                                    </Typography>
-                                </MenuItem>
-                            ))}
+                            {isAuthenticated &&
+                                pages.map(({ name, route }) => (
+                                    <MenuItem
+                                        key={name}
+                                        onClick={() => navigate(route)}
+                                    >
+                                        <Typography
+                                            sx={{ textAlign: "center" }}
+                                        >
+                                            {name}
+                                        </Typography>
+                                    </MenuItem>
+                                ))}
                         </Menu>
                     </Box>
                     <img
@@ -107,15 +110,20 @@ const AppBar: React.FC<AppBarProps> = ({ invisBg }) => {
                             display: { xs: "none", md: "flex" },
                         }}
                     >
-                        {pages.map(({ name, route }) => (
-                            <Button
-                                key={name}
-                                onClick={() => navigate(route)}
-                                sx={{ my: 2, color: "white", display: "block" }}
-                            >
-                                <Typography variant="h6">{name}</Typography>
-                            </Button>
-                        ))}
+                        {isAuthenticated &&
+                            pages.map(({ name, route }) => (
+                                <Button
+                                    key={name}
+                                    onClick={() => navigate(route)}
+                                    sx={{
+                                        my: 2,
+                                        color: "white",
+                                        display: "block",
+                                    }}
+                                >
+                                    <Typography variant="h6">{name}</Typography>
+                                </Button>
+                            ))}
                     </Box>
                     <Box
                         sx={{
@@ -124,11 +132,8 @@ const AppBar: React.FC<AppBarProps> = ({ invisBg }) => {
                             display: "flex",
                         }}
                     >
-                        <Tooltip title="Open settings">
-                            <IconButton
-                                onClick={() => navigate("/profile")}
-                                sx={{ p: 0 }}
-                            >
+                        <Tooltip title="Profile">
+                            <IconButton sx={{ p: 0 }}>
                                 {!isAuthenticated ? (
                                     <Avatar
                                         alt="user-avatar"
