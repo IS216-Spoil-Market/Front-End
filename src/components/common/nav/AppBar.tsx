@@ -15,6 +15,7 @@ import React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import SwaplyLogo from "../../../assets/images/logo/white.png";
 import { useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
 interface AppBarProps {
     invisBg?: boolean;
@@ -36,6 +37,7 @@ const pages = [
 ];
 
 const AppBar: React.FC<AppBarProps> = ({ invisBg }) => {
+    const { loginWithPopup, isAuthenticated, user } = useAuth0();
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null
     );
@@ -55,9 +57,6 @@ const AppBar: React.FC<AppBarProps> = ({ invisBg }) => {
                     >
                         <IconButton
                             size="large"
-                            aria-label="account of current user"
-                            aria-controls="menu-appbar"
-                            aria-haspopup="true"
                             onClick={(event) => {
                                 setAnchorElNav(event.currentTarget);
                             }}
@@ -130,11 +129,29 @@ const AppBar: React.FC<AppBarProps> = ({ invisBg }) => {
                                 onClick={() => navigate("/profile")}
                                 sx={{ p: 0 }}
                             >
-                                {/* To be modified to use actual pfp */}
-                                <Avatar
-                                    alt="Remy Sharp"
-                                    src="/static/images/avatar/2.jpg"
-                                />
+                                {!isAuthenticated ? (
+                                    <Avatar
+                                        alt="user-avatar"
+                                        src="/static/images/avatar/2.jpg"
+                                        onClick={() => loginWithPopup()}
+                                    />
+                                ) : user?.picture ? (
+                                    <img
+                                        width={50}
+                                        height={50}
+                                        style={{ borderRadius: 100 }}
+                                        alt="user-avatar"
+                                        src={user.picture}
+                                        referrerPolicy="no-referrer"
+                                        onClick={() => navigate("/profile")}
+                                    />
+                                ) : (
+                                    <Avatar
+                                        alt="user-avatar"
+                                        src="/static/images/avatar/2.jpg"
+                                        onClick={() => navigate("/profile")}
+                                    />
+                                )}
                             </IconButton>
                         </Tooltip>
                     </Box>
