@@ -1,10 +1,21 @@
 import { Box, Typography } from "@mui/material";
-import React from "react";
+import React, { useEffect } from "react";
 import AppBar from "../components/common/nav/AppBar";
 import Heading3 from "../components/common/heading/Heading3";
 import Heading4 from "../components/common/heading/Heading4";
+import { useAuth0 } from "@auth0/auth0-react";
+import { injectToken } from "../axios/client";
 
 const Home: React.FC = () => {
+    const { user, getAccessTokenSilently, isAuthenticated } = useAuth0();
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            console.log(user);
+            getAccessTokenSilently().then(injectToken);
+        }
+    }, [isAuthenticated]);
+
     return (
         <>
             <Box sx={{ height: 200, background: "purple" }}>
