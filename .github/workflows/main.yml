@@ -23,7 +23,9 @@ jobs:
           echo VITE_PRODUCTION_SERVER=${{ secrets.VITE_PRODUCTION_SERVER }} >> .env
           echo VITE_SKILL_API_KEY=${{ secrets.VITE_SKILL_API_KEY }} >> .env
           cat .env
+      - name: Install bun
+        run : npm i -g bun
       - name: Build React App
-        run: npm install && npm run build
+        run: bun i install && bun build
       - name: Deploy app build to S3 bucket
         run: aws s3 sync ./dist/ s3://adminpaneluig2t4 --delete
