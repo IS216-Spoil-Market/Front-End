@@ -9,6 +9,8 @@ import ProfileMainSection from "../components/profile/section/ProfileMainSection
 import SkillsSection from "../components/profile/section/SkillsSection";
 import useProfile from "../custom-hooks/react-query/profile/useProfile";
 import { ProfileFormI, profileSchema } from "../zod-schema/profileSchema";
+import { enqueueSnackbar } from "notistack";
+import useUpdateProfile from "../custom-hooks/react-query/profile/useUpdateProfile";
 
 interface ProfileProps {}
 
@@ -18,7 +20,8 @@ const Profile: React.FC<ProfileProps> = ({}) => {
         resolver: zodResolver(profileSchema),
     });
     const { handleSubmit } = formState;
-    const img = useProfile(formState)
+    const img = useProfile(formState);
+    const { mutate } = useUpdateProfile();
 
     return (
         <Container maxWidth="lg" sx={{ my: 4 }}>
@@ -29,7 +32,7 @@ const Profile: React.FC<ProfileProps> = ({}) => {
                 sx={{ bgcolor: "secondary.main", my: 2 }}
             />
             <FormProvider {...formState}>
-                <ProfileMainSection image={img}/>
+                <ProfileMainSection image={img} />
                 <SkillsSection variant="skills_interested" />
                 <SkillsSection variant="my_skills" />
             </FormProvider>
@@ -37,7 +40,14 @@ const Profile: React.FC<ProfileProps> = ({}) => {
                 variant="extended"
                 color="primary"
                 sx={{ position: "fixed", bottom: 24, right: 24 }}
-                onClick={handleSubmit((data) => console.log(data))}
+                onClick={handleSubmit(
+                    (data) => mutate(data),
+                    () =>
+                        enqueueSnackbar(
+                            "Please check your user inputs again!",
+                            { variant: "error" }
+                        )
+                )}
             >
                 Save
                 <SaveRounded sx={{ ml: 1 }} />
