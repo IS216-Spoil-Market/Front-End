@@ -26,6 +26,6 @@ jobs:
       - name: Install bun
         run : npm i -g bun
       - name: Build React App
-        run: bun i install && bun build
+        run: bun i && bun run build
       - name: Deploy app build to S3 bucket
-        run: aws s3 sync ./dist/ s3://adminpaneluig2t4 --delete
+        run: aws s3 sync ./dist/ s3://swaply-frontend --delete
