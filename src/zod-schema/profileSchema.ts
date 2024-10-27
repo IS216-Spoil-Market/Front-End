@@ -5,9 +5,10 @@ const skillSchema = z.object({
 });
 
 export const profileSchema = z.object({
+    id: z.string().min(1),
     name: z.string().min(3),
     email: z.string().email(),
-    about: z.string().min(3),
+    about: z.string(),
     skills_interested: z.array(skillSchema).default([]),
     my_skills: z.array(skillSchema).default([]),
 });
