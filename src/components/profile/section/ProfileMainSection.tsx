@@ -3,9 +3,11 @@ import React from "react";
 import Placeholder from "../../../assets/images/user/hero-banner.jpg";
 import TextField from "../../common/form/TextField";
 
-interface ProfileMainSectionProps {}
+interface ProfileMainSectionProps {
+    image?: string | null;
+}
 
-const ProfileMainSection: React.FC<ProfileMainSectionProps> = ({}) => {
+const ProfileMainSection: React.FC<ProfileMainSectionProps> = ({ image }) => {
     return (
         <Grid
             container
@@ -17,7 +19,7 @@ const ProfileMainSection: React.FC<ProfileMainSectionProps> = ({}) => {
         >
             <Grid item xs={12} sm={6} md={4} px={2}>
                 <img
-                    src={Placeholder}
+                    src={image ?? Placeholder}
                     style={{
                         borderRadius: "500px",
                         width: "100%",
