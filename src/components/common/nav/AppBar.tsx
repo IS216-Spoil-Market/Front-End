@@ -37,7 +37,7 @@ const pages = [
 ];
 
 const AppBar: React.FC<AppBarProps> = ({ invisBg }) => {
-    const { loginWithPopup, isAuthenticated, user } = useAuth0();
+    const { loginWithRedirect, isAuthenticated, user } = useAuth0();
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
         null
     );
@@ -138,7 +138,7 @@ const AppBar: React.FC<AppBarProps> = ({ invisBg }) => {
                                     <Avatar
                                         alt="user-avatar"
                                         src="/static/images/avatar/2.jpg"
-                                        onClick={() => loginWithPopup()}
+                                        onClick={() => loginWithRedirect()}
                                     />
                                 ) : user?.picture ? (
                                     <img
