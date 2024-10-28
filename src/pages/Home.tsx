@@ -99,7 +99,6 @@ const Home: React.FC = () => {
                     <Typography variant="h2">X</Typography>
                 </Box>
             
-
                 <Grid container spacing={4} sx={{ mt: 4 }}>
                     <Grid item xs={12} md={6}>
                         <img src={Section1} alt="Image1" 
@@ -170,6 +169,7 @@ const Home: React.FC = () => {
 
             <Divider variant="middle" sx={{ my: 4, width:'90%', margin: '0 auto' }}/>
 
+
             {/* Features Section */}
             <Container sx={{ textAlign: 'center', py: 8 }}>
                 <Box sx={{
@@ -180,6 +180,7 @@ const Home: React.FC = () => {
                     margin: 0,
                     gap: 3, 
                     alignItems: "center",
+                    
                     }}>
                     {Skills.map((feature, index) => (
                         <Grid item key={index} sx={{ px: 2, textAlign: 'center', minWidth: 150, flex: "0 0 auto" }}>
@@ -201,7 +202,6 @@ const Home: React.FC = () => {
             <Typography variant="h1">Heading 1</Typography>
             <Typography variant="h2">Heading 2</Typography>
             <Typography variant="h3">Heading 3</Typography>
-            <Typography variant="h4">Heading 4</Typography>
             <Typography variant="h5">Heading 5</Typography>
             <Typography variant="h6">Heading 6</Typography>
             <Typography variant="body1">Body 1</Typography>
