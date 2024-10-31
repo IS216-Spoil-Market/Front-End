@@ -15,7 +15,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
             domain="dev-cxf4lbu8xjigb53k.us.auth0.com"
             clientId="vQ2LnE1iX6ujx8bRmwQQ1Hm8xGlL0q1r"
             authorizationParams={{
-                redirect_uri: "http://localhost:3000",
+                redirect_uri: import.meta.env.VITE_REDIRECT_ORIGIN,
                 audience: import.meta.env.DEV
                     ? import.meta.env.VITE_DEVELOPMENT_SERVER
                     : import.meta.env.VITE_PRODUCTION_SERVER,
