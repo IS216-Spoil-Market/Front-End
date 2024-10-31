@@ -171,7 +171,7 @@ const Home: React.FC = () => {
 
 
             {/* Features Section */}
-            <Container sx={{ textAlign: 'center', py: 8 }}>
+            <Box sx={{ textAlign: 'center', py: 8 }}>
                 <Box sx={{
                     overflowX: "auto", 
                     display: "flex", 
@@ -194,7 +194,7 @@ const Home: React.FC = () => {
                 <Button variant="contained" color="primary" sx={{ mt: 4 }}>
                     Discover Mentor
                 </Button>
-            </Container>
+            </Box>
 
 
             {/* <Heading3>Heading 3</Heading3>
