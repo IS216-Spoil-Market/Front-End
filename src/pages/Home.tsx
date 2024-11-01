@@ -56,13 +56,16 @@ const Home: React.FC = () => {
                 backgroundSize: "cover", 
                 color: "white", 
                 textAlign: 'left', 
-                position: 'relative' }}>
+                position: 'relative',
+                pointerEvents: "none" 
+                }}>
                 <Box sx={{ 
-                    position: "static", 
+                    position: "relative", 
                     top: 0, 
                     left: 0, 
                     width: "100%", 
-                    zIndex: 10}}>
+                    pointerEvents: "auto"
+                    }}>
                     <AppBar invisBg />
                 </Box>
 
