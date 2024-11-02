@@ -1,14 +1,20 @@
 import SendIcon from "@mui/icons-material/Send";
-import { Box, IconButton, TextField } from "@mui/material";
-import { useState } from "react";
+import { Box, IconButton } from "@mui/material";
 import { drawerWidth } from "../../constants/chatAppBar";
+import { FormProvider, useForm } from "react-hook-form";
+import TextField from "../common/form/TextField";
+import useSendMessage from "../../custom-hooks/react-query/chat/useSendMessage";
 
 interface MessageInputProps {
     open: boolean;
+    chatId: string;
 }
 
-const MessageInput: React.FC<MessageInputProps> = ({ open }) => {
-    const [message, setMessage] = useState("");
+const MessageInput: React.FC<MessageInputProps> = ({ open, chatId }) => {
+    const formState = useForm<{ message: string }>();
+    const { reset, watch } = formState;
+    const { mutate } = useSendMessage(chatId);
+    const message = watch("message");
 
     return (
         <Box
@@ -23,17 +29,26 @@ const MessageInput: React.FC<MessageInputProps> = ({ open }) => {
                 flexDirection: "row",
             }}
         >
-            <TextField
-                fullWidth
-                placeholder="Type something..."
-                variant="standard"
-                onChange={({ target: { value } }) => {
-                    setMessage(value);
-                }}
-            />
+            <FormProvider {...formState}>
+                <TextField
+                    fullWidth
+                    name="message"
+                    placeholder="Type something..."
+                    variant="standard"
+                    onKeyUp={({ key }) => {
+                        if (key === "Enter") {
+                            mutate(message);
+                            reset();
+                        }
+                    }}
+                />
+            </FormProvider>
             <IconButton
                 disabled={message === "" ? true : false}
-                onClick={() => console.log(message)}
+                onClick={() => {
+                    mutate(message);
+                    reset();
+                }}
             >
                 <SendIcon />
             </IconButton>
