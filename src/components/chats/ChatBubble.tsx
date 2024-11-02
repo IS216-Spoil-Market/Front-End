@@ -1,10 +1,4 @@
-import {
-    Box,
-    ListItem,
-    Typography,
-    useMediaQuery,
-    useTheme,
-} from "@mui/material";
+import { Box, ListItem, Theme, Typography, useMediaQuery } from "@mui/material";
 
 interface ChatBubbleProps {
     message: string;
@@ -12,8 +6,9 @@ interface ChatBubbleProps {
 }
 
 const ChatBubble: React.FC<ChatBubbleProps> = ({ message, type }) => {
-    const theme = useTheme();
-    const isAboveMedium = useMediaQuery(theme.breakpoints.up("md"));
+    const isAboveMedium = useMediaQuery((theme) =>
+        (theme as Theme).breakpoints.up("md")
+    );
     const [variant, flex] =
         type === "sender" ? ["secondary", "end"] : ["primary", "start"];
 
@@ -35,7 +30,11 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({ message, type }) => {
                     borderRadius: 16,
                 }}
             >
-                <Typography color="white" display="inline-block" component="div">
+                <Typography
+                    color="white"
+                    display="inline-block"
+                    component="div"
+                >
                     {message}
                 </Typography>
             </Box>
