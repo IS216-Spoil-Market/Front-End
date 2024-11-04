@@ -133,12 +133,11 @@ const AppBar: React.FC<AppBarProps> = ({ invisBg }) => {
                         }}
                     >
                         <Tooltip title="Profile">
-                            <IconButton sx={{ p: 0 }}>
+                            <IconButton sx={{ p: 0 }} onClick={() => isAuthenticated ? navigate("/profile"): loginWithRedirect()}>
                                 {!isAuthenticated ? (
                                     <Avatar
                                         alt="user-avatar"
                                         src="/static/images/avatar/2.jpg"
-                                        onClick={() => loginWithRedirect()}
                                     />
                                 ) : user?.picture ? (
                                     <img
@@ -148,13 +147,11 @@ const AppBar: React.FC<AppBarProps> = ({ invisBg }) => {
                                         alt="user-avatar"
                                         src={user.picture}
                                         referrerPolicy="no-referrer"
-                                        onClick={() => navigate("/profile")}
                                     />
                                 ) : (
                                     <Avatar
                                         alt="user-avatar"
                                         src="/static/images/avatar/2.jpg"
-                                        onClick={() => navigate("/profile")}
                                     />
                                 )}
                             </IconButton>

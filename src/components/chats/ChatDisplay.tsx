@@ -1,61 +1,41 @@
-import { Box, Stack } from "@mui/material";
-import TopBar from "./TopBar";
-import wallpaper from "../../assets/images/home/hero-banner.jpg";
-import MessageInput from "./MessageInput";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Box, List } from "@mui/material";
+import useMessages from "../../custom-hooks/react-query/chat/useMessagges";
+import { ChatItem } from "../../types/chat";
 import ChatBubble from "./ChatBubble";
 
 interface ChatDisplayProps {
-	userId: number;
+    currentChat?: ChatItem;
 }
 
-const ChatDisplay: React.FC<ChatDisplayProps> = ({ userId }) => {
-	const messages = [
-		{ text: "hi", id: 1 },
-		{ text: "hi", id: 1 },
-		{ text: "hi", id: 0 },
-		{ text: "hi", id: 1 },
-		{ text: "hi", id: 1 },
-		{ text: "hi", id: 1 },
-		{ text: "hi", id: 1 },
-		{ text: "hi", id: 0 },
-		{ text: "hi", id: 1 },
-		{ text: "hi", id: 1 },
-		{ text: "hi", id: 1 },
-		{ text: "hi", id: 0 },
-		{ text: "hi", id: 0 },
-		{ text: "hi", id: 1 },
-		{ text: "hi", id: 1 },
-		{ text: "hi", id: 0 },
-		{ text: "hi", id: 1 },
-	];
-	// const displayedMessages = messages.slice(-10);
+const ChatDisplay: React.FC<ChatDisplayProps> = ({ currentChat }) => {
+    const { data: messages } = useMessages(currentChat?.id);
+    const { user } = useAuth0();
 
-	return (
-		<Box
-			sx={{
-				overflow: "auto",
-				height: "100vh",
-				width: "100%",
-				display: "flex",
-				flexDirection: "column",
-				backgroundImage: `url(${wallpaper})`,
-				backgroundRepeat: "no-repeat",
-				backgroundSize: "cover",
-			}}
-		>
-			<TopBar userId={userId} />
-			<Stack direction={"column"} sx={{ flexGrow: 1 }}>
-				{messages.map((message, index) => (
-					<ChatBubble
-						key={index}
-						message={message.text}
-						type={message.id != userId ? "sender" : "receiver"}
-					></ChatBubble>
-				))}
-			</Stack>
-			<MessageInput></MessageInput>
-		</Box>
-	);
+    return (
+        <Box
+            sx={{
+                display: "flex",
+                flexDirection: "column-reverse",
+                minHeight: "100%",
+            }}
+        >
+            <List>
+                {currentChat &&
+                    messages?.map((message, index) => (
+                        <ChatBubble
+                            key={index}
+                            message={message.content}
+                            type={
+                                message.sender.name !== user?.name
+                                    ? "sender"
+                                    : "receiver"
+                            }
+                        />
+                    ))}
+            </List>
+        </Box>
+    );
 };
 
 export default ChatDisplay;

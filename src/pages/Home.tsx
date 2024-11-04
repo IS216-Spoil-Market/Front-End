@@ -1,7 +1,7 @@
 import { Container, Box, Typography, Grid, Button, Divider } from "@mui/material";
 import React, { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { injectToken } from "../axios/client";
+import { injectProfile } from "../axios/client";
 import AppBar from "../components/common/nav/AppBar";
 import Banner from "../assets/images/home/hero-banner.jpg";
 import Logo from "../assets/images/logo/black.png";
@@ -43,8 +43,7 @@ const Home: React.FC = () => {
 
     useEffect(() => {
         if (isAuthenticated) {
-            console.log(user);
-            getAccessTokenSilently().then(injectToken);
+            getAccessTokenSilently().then((token) => injectProfile(token, user?.email));
         }
     }, [isAuthenticated]);
 
