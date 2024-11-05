@@ -1,67 +1,70 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Box, TextField, Typography, Card, Grid, CardContent, Chip, Avatar } from "@mui/material";
 import { Link } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
 import StarRating from '../../components/star';
 import heroBanner from '../../assets/images/user/hero-banner.jpg';
 import AppBar from "../../components/common/nav/AppBar";
-
-interface UserListingProps { }
-
-const reviews = [
-    {
-        name: "John Doe",
-        skill: "Mobile App Development",
-        text: "A Frontend developer who has been looking for jobs for ages but still cannot land a single job because the OA involved dp for all jobs I wanted for some reasons.",
-        rating: 3.5,
-        image: "/path/to/image.jpg",
-    },
-    {
-        name: "Jane Smith",
-        skill: "Web Development",
-        text: "A passionate web developer always looking for opportunities to learn and grow.",
-        rating: 4,
-        image: "/path/to/image2jpg",
-    },
-    {
-        name: "Tan Lee Xin",
-        skill: "Web Development",
-        text: "WOW A passionate xiao ding dong always looking for opportunities to disturb people and hehehaha.",
-        rating: 4,
-        image: "/path/to/image2.jpg",
-    },
-    {
-        name: "Ding Dong Ling Long",
-        skill: "UIUX",
-        text: "WOW A passionate xiao ding dong always looking for opportunities to disturb people and hehehaha.",
-        rating: 4,
-        image: "/path/to/image2.jpg",
-    },
-];
+import { getUsersBySkill, getUsers } from "../../axios/profile";
+import { User } from "../../types/userBySkill";
 
 
-const UserListing: React.FC<UserListingProps> = ({ }) => {
+const UserListing: React.FC = ({ }) => {
     const [searchTerm, setSearchTerm] = useState('');
+    const [users, setUsers] = useState<User[]>([]);
+    const [allUsers, setAllUsers] = useState<User[]>([]);
 
-    const filteredReviews = reviews.filter(review =>
-        review.skill.toLowerCase().includes(searchTerm.toLowerCase())
-    );
+    useEffect(() => {
+        const fetchAllUsers = async () => {
+            try {
+                const response = await getUsers();
+                setAllUsers(response);
+                setUsers(response);
+            } catch (error) {
+                console.error("Error fetching all users:", error);
+                setAllUsers([]);
+                setUsers([]);
+            }
+        };
+        fetchAllUsers();
+    }, [])
 
-    const renderReviews = () => {
-        if (filteredReviews.length === 0 && searchTerm) {
+    useEffect(() => {
+        const fetchUsers = async () => {
+            if (searchTerm) {
+                try {
+                    const response = await getUsersBySkill(searchTerm); // Fetch users based on search term
+                    setUsers(response); // Update the users state with fetched data
+                    console.log("Response received:", response);
+                } catch (error) {
+                    console.error("Error fetching users:", error);
+                    setUsers([]); // Reset users on error
+                }
+            } else {
+                setUsers(allUsers);
+
+            }
+        };
+
+        fetchUsers(); // Call the fetch function on searchTerm change
+    }, [searchTerm, allUsers]); // Depend on searchTerm to re-fetch when it changes
+
+
+    const renderUsers = () => {
+        if (users.length === 0 && searchTerm) {
             return (
                 <Typography variant="body1" sx={{ textAlign: 'center', color: 'gray' }}>
                     No reviews found for "{searchTerm}".
                 </Typography>
             );
-        } else if (filteredReviews.length > 0 && searchTerm) {
+        } else if (users.length > 0) {
             return (
                 <Grid container spacing={4} >
                     {
-                        filteredReviews.map((review, index) => (
-                            <Grid item xs={12} sm={12} lg={6} >
-                                <Link to="/user/:id" style={{ textDecoration: 'none' }}>
-                                    <Card key={index} sx={{ mb: 2 }}>
+                        users.map(user => (
+                            <Grid item xs={12} sm={12} lg={6} key={user.id} >
+                                <Link to={`/user/${user.id}`} style={{ textDecoration: 'none' }}>
+                                    <Card sx={{ mb: 2 }}>
                                         <CardContent>
                                             <Box sx={{ display: "flex", flexDirection: { xs: 'column', sm: 'row' }, alignItems: { xs: 'center', sm: 'flex-start' }, }}>
 
@@ -72,8 +75,8 @@ const UserListing: React.FC<UserListingProps> = ({ }) => {
                                                     flexDirection: 'column',
                                                     alignItems: 'center'
                                                 }}>
-                                                    <Avatar src={review.image} alt={review.name} sx={{ width: 100, height: 100 }} />
-                                                    <StarRating rating={review.rating} sx={{ pt: { xs: 2, sm: 4 } }} /> {/* Assuming StarRating is aligned under the avatar */}
+                                                    <Avatar src={user.picture} alt={user.name} sx={{ width: 100, height: 100 }} />
+                                                    <StarRating rating={user.averageRating} sx={{ pt: { xs: 2, sm: 4 } }} /> {/* Assuming StarRating is aligned under the avatar */}
                                                 </Box>
 
                                                 <Box sx={{ flexGrow: 1 }}>
@@ -90,20 +93,21 @@ const UserListing: React.FC<UserListingProps> = ({ }) => {
                                                                 fontSize: '1.5rem',
                                                                 color: "#303F9F"
                                                             }}>
-                                                            {review.name}
+                                                            {user.name}
                                                         </Typography>
                                                         <Chip
-                                                            label={review.skill}
+                                                            label={user.selectedSkill}
                                                             sx={{
                                                                 borderRadius: 5,
                                                                 backgroundColor: '#3D5AFE',
                                                                 color: 'white',
-
+                                                                padding: '0 16px',
+                                                                alignItems: 'center',
                                                             }}
                                                         />
                                                     </Box>
                                                     <Typography variant="body2" sx={{ mt: 1, fontSize: '1rem' }}>
-                                                        {review.text}
+                                                        {user.about}
                                                     </Typography>
                                                 </Box>
                                             </Box>
@@ -128,7 +132,7 @@ const UserListing: React.FC<UserListingProps> = ({ }) => {
                     textAlign: 'center',
                     backgroundImage: `url(${heroBanner})`,
                     backgroundSize: 'cover',
-                 pb:14
+                    pb: 14
                 }}
             >
                 <AppBar invisBg />
@@ -164,8 +168,6 @@ const UserListing: React.FC<UserListingProps> = ({ }) => {
                         '& .MuiInputBase-input': {
                             padding: '10px 20px',
                         },
-
-
                     }}
                     InputProps={{
                         startAdornment: (
@@ -175,7 +177,7 @@ const UserListing: React.FC<UserListingProps> = ({ }) => {
                 />
             </Box>
             <Container>
-                {renderReviews()}
+                {renderUsers()}
             </Container>
 
         </>
