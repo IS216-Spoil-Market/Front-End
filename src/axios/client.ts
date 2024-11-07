@@ -8,17 +8,28 @@ const configureInstance = (instanceUrl: string) => ({
 
 // Configure the instances by replacing the string for calling configureInstance
 export const profileInstance = axios.create(configureInstance("profile"));
+export const chatInstance = axios.create(configureInstance("chat"));
+export const messageInstance = axios.create(configureInstance("message"));
+export const userInstance = axios.create(configureInstance("user"));
+export const reviewInstance = axios.create(configureInstance("review"));
 
 const configCallback = (
     config: InternalAxiosRequestConfig<any>,
-    token: string
+    token: string,
+    email: string
 ) => {
     config.headers.Authorization = `Bearer ${token}`;
+    config.headers.email = email;
     return config;
 };
 
-export const injectToken = (token: string) => {
-    profileInstance.interceptors.request.use((config) =>
-        configCallback(config, token)
-    );
+export const injectProfile = (token: string, email?: string) => {
+    const config = (config: InternalAxiosRequestConfig) =>
+        configCallback(config, token, email || "");
+
+    profileInstance.interceptors.request.use(config);
+    chatInstance.interceptors.request.use(config);
+    messageInstance.interceptors.request.use(config);
+    userInstance.interceptors.request.use(config);
+    reviewInstance.interceptors.request.use(config);
 };

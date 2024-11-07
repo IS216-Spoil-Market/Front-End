@@ -1,125 +1,14 @@
-import React, { useState } from "react";
-import { Container, Box, TextField, Typography, Card, Grid, CardContent, Chip, Avatar } from "@mui/material";
-import { Link } from 'react-router-dom';
 import SearchIcon from '@mui/icons-material/Search';
-import StarRating from '../../components/star';
+import { Box, Container, TextField, Typography } from "@mui/material";
+import React, { useState } from "react";
 import heroBanner from '../../assets/images/user/hero-banner.jpg';
 import AppBar from "../../components/common/nav/AppBar";
+import UserListingComponent from '../../components/user/listing/UserListing';
 
-interface UserListingProps { }
-
-const reviews = [
-    {
-        name: "John Doe",
-        skill: "Mobile App Development",
-        text: "A Frontend developer who has been looking for jobs for ages but still cannot land a single job because the OA involved dp for all jobs I wanted for some reasons.",
-        rating: 3.5,
-        image: "/path/to/image.jpg",
-    },
-    {
-        name: "Jane Smith",
-        skill: "Web Development",
-        text: "A passionate web developer always looking for opportunities to learn and grow.",
-        rating: 4,
-        image: "/path/to/image2jpg",
-    },
-    {
-        name: "Tan Lee Xin",
-        skill: "Web Development",
-        text: "WOW A passionate xiao ding dong always looking for opportunities to disturb people and hehehaha.",
-        rating: 4,
-        image: "/path/to/image2.jpg",
-    },
-    {
-        name: "Ding Dong Ling Long",
-        skill: "UIUX",
-        text: "WOW A passionate xiao ding dong always looking for opportunities to disturb people and hehehaha.",
-        rating: 4,
-        image: "/path/to/image2.jpg",
-    },
-];
-
-
-const UserListing: React.FC<UserListingProps> = ({ }) => {
+const UserListing: React.FC = ({ }) => {
     const [searchTerm, setSearchTerm] = useState('');
 
-    const filteredReviews = reviews.filter(review =>
-        review.skill.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
-    const renderReviews = () => {
-        if (filteredReviews.length === 0 && searchTerm) {
-            return (
-                <Typography variant="body1" sx={{ textAlign: 'center', color: 'gray' }}>
-                    No reviews found for "{searchTerm}".
-                </Typography>
-            );
-        } else if (filteredReviews.length > 0 && searchTerm) {
-            return (
-                <Grid container spacing={4} >
-                    {
-                        filteredReviews.map((review, index) => (
-                            <Grid item xs={12} sm={12} lg={6} >
-                                <Link to="/user/:id" style={{ textDecoration: 'none' }}>
-                                    <Card key={index} sx={{ mb: 2 }}>
-                                        <CardContent>
-                                            <Box sx={{ display: "flex", flexDirection: { xs: 'column', sm: 'row' }, alignItems: { xs: 'center', sm: 'flex-start' }, }}>
-
-                                                <Box sx={{
-                                                    mr: { sm: 2 },
-                                                    mb: { xs: 2, sm: 0 },
-                                                    display: 'flex',
-                                                    flexDirection: 'column',
-                                                    alignItems: 'center'
-                                                }}>
-                                                    <Avatar src={review.image} alt={review.name} sx={{ width: 100, height: 100 }} />
-                                                    <StarRating rating={review.rating} sx={{ pt: { xs: 2, sm: 4 } }} /> {/* Assuming StarRating is aligned under the avatar */}
-                                                </Box>
-
-                                                <Box sx={{ flexGrow: 1 }}>
-                                                    <Box
-                                                        sx={{
-                                                            display: 'flex',
-                                                            flexDirection: { xs: 'column', sm: 'row' },
-                                                            justifyContent: 'space-between',
-                                                            alignItems: 'center',
-                                                        }}
-                                                    >
-                                                        <Typography variant="body1"
-                                                            sx={{
-                                                                fontSize: '1.5rem',
-                                                                color: "#303F9F"
-                                                            }}>
-                                                            {review.name}
-                                                        </Typography>
-                                                        <Chip
-                                                            label={review.skill}
-                                                            sx={{
-                                                                borderRadius: 5,
-                                                                backgroundColor: '#3D5AFE',
-                                                                color: 'white',
-
-                                                            }}
-                                                        />
-                                                    </Box>
-                                                    <Typography variant="body2" sx={{ mt: 1, fontSize: '1rem' }}>
-                                                        {review.text}
-                                                    </Typography>
-                                                </Box>
-                                            </Box>
-
-                                        </CardContent>
-                                    </Card>
-                                </Link>
-                            </Grid>
-                        ))
-                    }
-                </Grid >
-            )
-        }
-    };
     return (
-
         <>
             <Box
                 sx={{
@@ -128,7 +17,7 @@ const UserListing: React.FC<UserListingProps> = ({ }) => {
                     textAlign: 'center',
                     backgroundImage: `url(${heroBanner})`,
                     backgroundSize: 'cover',
-                 pb:14
+                    pb: 14
                 }}
             >
                 <AppBar invisBg />
@@ -164,8 +53,6 @@ const UserListing: React.FC<UserListingProps> = ({ }) => {
                         '& .MuiInputBase-input': {
                             padding: '10px 20px',
                         },
-
-
                     }}
                     InputProps={{
                         startAdornment: (
@@ -175,7 +62,7 @@ const UserListing: React.FC<UserListingProps> = ({ }) => {
                 />
             </Box>
             <Container>
-                {renderReviews()}
+                <UserListingComponent searchTerm={searchTerm} />
             </Container>
 
         </>
