@@ -1,6 +1,9 @@
 import { Box, Button, Grid, Rating, Typography } from "@mui/material";
 import React, { useMemo } from "react";
 import { UserDetails } from "../../../types/userDetails";
+import { useMutation } from "@tanstack/react-query";
+import { createOrGetChat } from "../../../axios/chat";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface UserMainDetailsSectionProps {
     user: UserDetails;
@@ -15,6 +18,13 @@ const UserMainDetailsSection: React.FC<UserMainDetailsSectionProps> = ({
             user?.reviews?.length,
         [user?.reviews]
     );
+    const {id} = useParams()
+
+    const navigate = useNavigate();
+    const { mutate } = useMutation({
+        mutationFn: (id?: string) => createOrGetChat(id ?? ""),
+        onSuccess: ({ id }) => navigate("/chat", { state: { id } }),
+    });
 
     return (
         <Grid item xs={12} md={2} textAlign="center">
@@ -44,7 +54,12 @@ const UserMainDetailsSection: React.FC<UserMainDetailsSectionProps> = ({
                     {averageRating}
                 </Typography>
             </Box>
-            <Button variant="contained" size="large" color="primary">
+            <Button
+                onClick={() => mutate(id)}
+                variant="contained"
+                size="large"
+                color="primary"
+            >
                 Barter Now
             </Button>
         </Grid>
