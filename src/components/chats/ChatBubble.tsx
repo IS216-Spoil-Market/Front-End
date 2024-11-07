@@ -10,7 +10,7 @@ const ChatBubble: React.FC<ChatBubbleProps> = ({ message, type }) => {
         (theme as Theme).breakpoints.up("md")
     );
     const [variant, flex] =
-        type === "sender" ? ["secondary", "end"] : ["primary", "start"];
+        type === "sender" ? ["secondary", "start"] : ["primary", "end"];
 
     return (
         <ListItem
