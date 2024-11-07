@@ -19,7 +19,7 @@ const ChatDisplay: React.FC<ChatDisplayProps> = ({ currentChat }) => {
 
 	useEffect(() => {
 		//connect to socket in socket.ts
-		socket.on("connected", () => console.log("socket connected!"));
+		// socket.on("connected", () => console.log("socket connected!"));
 		//upon "message received" event, query for latest messages
 		socket.on("message received", (chatId) => {
 			queryClient.invalidateQueries({ queryKey: ["message", chatId] });

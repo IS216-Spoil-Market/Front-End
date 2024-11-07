@@ -27,7 +27,7 @@ export const getUsersBySkill = async (skill: string) => {
         const { data } = await userInstance.get(`/${encodedSkill}`);
         return data as User[]; // Assuming the response is an array of profiles
     } catch (error) {
-        console.error("Error fetching users by skill:", error);
+        // console.error("Error fetching users by skill:", error);
         throw error; // Optionally rethrow the error or handle it as needed
     }
 };
