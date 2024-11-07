@@ -1,7 +1,7 @@
 import { Profile } from "../types/user";
-import {User} from "../types/userBySkill";
+import { User } from "../types/userBySkill";
 import { ProfileFormI } from "../zod-schema/profileSchema";
-import { profileInstance ,userInstance} from "./client";
+import { profileInstance, userInstance } from "./client";
 
 export const createOrGetUser = async () => {
     const { data } = await profileInstance.post("/");
@@ -21,7 +21,7 @@ export const updateProfile = async ({
     return data as Profile;
 };
 
-export const getUsersBySkill = async (skill:string) => {
+export const getUsersBySkill = async (skill: string) => {
     try {
         const encodedSkill = encodeURIComponent(skill);
         const { data } = await userInstance.get(`/${encodedSkill}`);
@@ -33,11 +33,6 @@ export const getUsersBySkill = async (skill:string) => {
 };
 
 export const getUsers = async () => {
-    try {
-        const { data } = await userInstance.get("");
-        return data as User[]; // Assuming the response is an array of profiles
-    } catch (error) {
-        console.error("Error fetching users by skill:", error);
-        throw error; // Optionally rethrow the error or handle it as needed
-    }
+    const { data } = await userInstance.get("");
+    return data as User[]; // Assuming the response is an array of profiles
 };
