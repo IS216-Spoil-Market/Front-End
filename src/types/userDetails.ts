@@ -1,4 +1,5 @@
 export interface ReviewItem {
+    _id: string
     rating: number;
     review_of_user: string;
     reviewee_id: UserDetails;
