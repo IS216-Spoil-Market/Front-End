@@ -14,8 +14,8 @@ const UserMainDetailsSection: React.FC<UserMainDetailsSectionProps> = ({
 }) => {
     const averageRating = useMemo(
         () =>
-            user?.reviews?.reduce((prev, curr) => (prev += curr?.rating), 0) /
-            user?.reviews?.length,
+            Math.round(user?.reviews?.reduce((prev, curr) => (prev += curr?.rating), 0) /
+            user?.reviews?.length * 100)/100,
         [user?.reviews]
     );
     const {id} = useParams()
@@ -49,7 +49,7 @@ const UserMainDetailsSection: React.FC<UserMainDetailsSectionProps> = ({
                 mt={1}
                 mb={2}
             >
-                <Rating value={averageRating} precision={0.5} readOnly />
+                <Rating value={averageRating} precision={0.25} readOnly />
                 <Typography variant="body1" sx={{ ml: 1 }}>
                     {averageRating}
                 </Typography>

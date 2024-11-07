@@ -16,7 +16,7 @@ const Rating: React.FC<RatingProps> = ({ name }) => {
             defaultValue={0.0}
             render={({ field }) => (
                 <MUIRating
-                    precision={0.5}
+                    precision={0.25}
                     {...field}
                     onChange={(_, newVal) => field.onChange(newVal)}
                 />
