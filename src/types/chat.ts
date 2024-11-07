@@ -3,7 +3,7 @@ import { Profile } from "./user";
 export interface ChatItem {
     users: Profile[];
     id: string;
-    latestMessage: LatestMessageItem;
+    latestMessage?: LatestMessageItem;
 }
 
 export interface LatestMessageItem {
