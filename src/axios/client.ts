@@ -11,7 +11,7 @@ export const profileInstance = axios.create(configureInstance("profile"));
 export const chatInstance = axios.create(configureInstance("chat"));
 export const messageInstance = axios.create(configureInstance("message"));
 export const userInstance = axios.create(configureInstance("user"));
-
+export const reviewInstance = axios.create(configureInstance("review"));
 
 const configCallback = (
     config: InternalAxiosRequestConfig<any>,
@@ -31,4 +31,5 @@ export const injectProfile = (token: string, email?: string) => {
     chatInstance.interceptors.request.use(config);
     messageInstance.interceptors.request.use(config);
     userInstance.interceptors.request.use(config);
+    reviewInstance.interceptors.request.use(config);
 };
