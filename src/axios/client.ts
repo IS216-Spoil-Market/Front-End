@@ -10,6 +10,8 @@ const configureInstance = (instanceUrl: string) => ({
 export const profileInstance = axios.create(configureInstance("profile"));
 export const chatInstance = axios.create(configureInstance("chat"));
 export const messageInstance = axios.create(configureInstance("message"));
+export const userInstance = axios.create(configureInstance("user"));
+
 
 const configCallback = (
     config: InternalAxiosRequestConfig<any>,
@@ -28,4 +30,5 @@ export const injectProfile = (token: string, email?: string) => {
     profileInstance.interceptors.request.use(config);
     chatInstance.interceptors.request.use(config);
     messageInstance.interceptors.request.use(config);
+    userInstance.interceptors.request.use(config);
 };
