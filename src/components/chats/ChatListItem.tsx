@@ -26,12 +26,14 @@ const ChatListItem: React.FC<ChatListItemProp> = ({
             <ListItemButton onClick={onClick}>
                 <img
                     src={img}
+                    referrerPolicy="no-referrer"
                     style={{
                         marginRight: 16,
                         width: 50,
                         height: 50,
                         borderRadius: 50,
                     }}
+                    
                 />
                 <ListItemText
                     primary={name}

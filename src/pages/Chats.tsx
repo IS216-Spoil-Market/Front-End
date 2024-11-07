@@ -14,6 +14,13 @@ import useScroll from "../custom-hooks/window/useScroll";
 
 interface ChatsProps {}
 
+/* 
+    To-Do:
+    - change hardcoded endpoint?
+    - update chat list when message is sent
+    - remove aria-hidden errors
+*/
+
 const Chats: React.FC<ChatsProps> = ({}) => {
     // For styling purposes
     const isAboveMedium = useMediaQuery((theme) =>
