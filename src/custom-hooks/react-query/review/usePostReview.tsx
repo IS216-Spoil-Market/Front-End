@@ -16,8 +16,8 @@ const usePostReview = () => {
                 queryKey: ["user"],
             });
         },
-        onError: (error) => {
-            console.error("Error in custom hook ", error);
+        onError: () => {
+            // console.error("Error in custom hook ", error);
             enqueueSnackbar("Failed to post review, please try again!", {
                 variant: "error",
             });
