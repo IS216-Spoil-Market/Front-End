@@ -16,6 +16,7 @@ import usePostReview from "../../../custom-hooks/react-query/review/usePostRevie
 import { ReviewFormI, reviewSchema } from "../../../zod-schema/reviewSchema";
 import Rating from "../../common/form/Rating";
 import TextField from "../../common/form/TextField";
+import PlaceholderImage from "../../../assets/images/user-placeholder.png"
 
 interface LeaveReviewSectionProps {}
 
@@ -43,7 +44,15 @@ const LeaveReviewSection: React.FC<LeaveReviewSectionProps> = ({}) => {
                     <Grid container direction="row">
                         <Grid xs={2} margin={2} item>
                             {user?.picture ? (
-                                <img src={user?.picture} style={{borderRadius: 100}} referrerPolicy="no-referrer"/>
+                                <img
+                                    src={user?.picture ?? PlaceholderImage}
+                                    style={{ borderRadius: 100 }}
+                                    referrerPolicy="no-referrer"
+                                    onError={({ currentTarget }) => {
+                                        currentTarget.onerror = null;
+                                        currentTarget.src = PlaceholderImage;
+                                    }}
+                                />
                             ) : (
                                 <Avatar
                                     sx={{

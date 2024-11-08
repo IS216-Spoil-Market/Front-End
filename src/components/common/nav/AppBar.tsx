@@ -16,6 +16,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import SwaplyLogo from "../../../assets/images/logo/white.png";
 import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import PlaceholderImage from "../../../assets/images/user-placeholder.png"
 
 interface AppBarProps {
     invisBg?: boolean;
@@ -145,8 +146,12 @@ const AppBar: React.FC<AppBarProps> = ({ invisBg }) => {
                                         height={50}
                                         style={{ borderRadius: 100 }}
                                         alt="user-avatar"
-                                        src={user.picture}
+                                        src={user.picture ?? PlaceholderImage}
                                         referrerPolicy="no-referrer"
+                                        onError={({ currentTarget }) => {
+                                            currentTarget.onerror = null;
+                                            currentTarget.src = PlaceholderImage;
+                                        }}
                                     />
                                 ) : (
                                     <Avatar

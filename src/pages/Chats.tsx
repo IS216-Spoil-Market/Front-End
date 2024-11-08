@@ -45,7 +45,7 @@ const Chats: React.FC<ChatsProps> = ({}) => {
 
     // For keeping track of currently active chat
     useEffect(() => {
-        if (chats && chats.length > 0) setSelected(state.id ?? chats[0].id);
+        if (chats && chats.length > 0) setSelected(state?.id ?? chats[0]?.id ?? "");
     }, [chats]);
 
     // Compute and find the user who is not the author based on each chat's users array
