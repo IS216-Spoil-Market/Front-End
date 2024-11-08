@@ -1,6 +1,7 @@
 import { ListItem, ListItemButton, ListItemText } from "@mui/material";
 import { grey } from "@mui/material/colors";
 import { MouseEventHandler } from "react";
+import PlaceholderImage from "../../assets/images/user-placeholder.png";
 
 interface ChatListItemProp {
     name: string;
@@ -9,7 +10,6 @@ interface ChatListItemProp {
     selected: boolean;
     img: string;
 }
-
 
 const ChatListItem: React.FC<ChatListItemProp> = ({
     name,
@@ -25,7 +25,11 @@ const ChatListItem: React.FC<ChatListItemProp> = ({
         >
             <ListItemButton onClick={onClick}>
                 <img
-                    src={img}
+                    src={img ?? PlaceholderImage}
+                    onError={({ currentTarget }) => {
+                        currentTarget.onerror = null;
+                        currentTarget.src = PlaceholderImage;
+                    }}
                     referrerPolicy="no-referrer"
                     style={{
                         marginRight: 16,
@@ -33,7 +37,6 @@ const ChatListItem: React.FC<ChatListItemProp> = ({
                         height: 50,
                         borderRadius: 50,
                     }}
-                    
                 />
                 <ListItemText
                     primary={name}

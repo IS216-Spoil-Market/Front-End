@@ -2,6 +2,7 @@ import { Box, Grid, Rating, Typography } from "@mui/material";
 import dayjs from "dayjs";
 import React from "react";
 import { ReviewItem as ReviewItemI } from "../../../types/userDetails";
+import PlaceholderImage from "../../../assets/images/user-placeholder.png"
 
 interface ReviewItemProps {
     review?: ReviewItemI;
@@ -14,13 +15,17 @@ const ReviewItem: React.FC<ReviewItemProps> = ({ review }) => {
                 <Grid item xs={12} md={12} display="flex">
                     <Grid item xs={2} md={2}>
                         <img
-                            src={review?.reviewer_id?.picture}
+                            src={review?.reviewer_id?.picture ?? PlaceholderImage}
                             alt="User Profile"
                             style={{
                                 borderRadius: "50%",
                                 width: "50%",
                                 height: "auto",
                                 objectFit: "cover",
+                            }}
+                            onError={({ currentTarget }) => {
+                                currentTarget.onerror = null;
+                                currentTarget.src = PlaceholderImage;
                             }}
                         />
                     </Grid>

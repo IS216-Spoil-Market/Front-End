@@ -2,6 +2,7 @@ import { Grid } from "@mui/material";
 import React from "react";
 import Placeholder from "../../../assets/images/user/hero-banner.jpg";
 import TextField from "../../common/form/TextField";
+import PlaceholderImage from "../../../assets/images/user-placeholder.png";
 
 interface ProfileMainSectionProps {
     image?: string | null;
@@ -25,6 +26,10 @@ const ProfileMainSection: React.FC<ProfileMainSectionProps> = ({ image }) => {
                         width: "100%",
                         aspectRatio: "1",
                         objectFit: "cover",
+                    }}
+                    onError={({ currentTarget }) => {
+                        currentTarget.onerror = null;
+                        currentTarget.src = PlaceholderImage;
                     }}
                 />
             </Grid>
