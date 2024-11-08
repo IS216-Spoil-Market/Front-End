@@ -4,7 +4,7 @@
 
 ### By cloning
 
-- Clone this template with `git clone https://github.com/Bk49/React-Template.git`
+- Clone this template with `git clone https://github.com/IS216-Spoil-Market/Front-End.git`
 - Set direction to your current remote with `git remote add origin <your_git_remote>`
 - Push it to your master branch in your remote repository `git push -u origin master`
 
@@ -39,7 +39,7 @@ This application relies on the backend in this [Github Repository](https://githu
 
 ### URL
 
-- Hosted Application: https://dashboard.render.com/static/srv-csf0uv0gph6c73eujad0/deploys/dep-csms86bgbbvc73bhurhg
+- Hosted Application: https://front-end-gz27.onrender.com
 - GitHub Remote Repository (SSH): git@github.com:IS216-Spoil-Market/Front-End.git
 - GitHub Remote Repository (HTTPS): https://github.com/IS216-Spoil-Market/Front-End.git
 
