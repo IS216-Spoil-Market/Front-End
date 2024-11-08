@@ -33,6 +33,7 @@ const UserDetails: React.FC = () => {
                                             label={skill}
                                             key={skill}
                                             color="primary"
+                                            sx={{ margin: 0.5}}
                                         />
                                     ))}
                                 </Grid>
@@ -71,6 +72,7 @@ const UserDetails: React.FC = () => {
                                 <Typography
                                     variant="body1"
                                     color="textSecondary"
+                                    align="center"
                                 >
                                     No reviews available for this user.
                                 </Typography>

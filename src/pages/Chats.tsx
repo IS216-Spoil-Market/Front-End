@@ -11,6 +11,7 @@ import ChatMain from "../components/chats/section/ChatMain";
 import { drawerWidth } from "../constants/chatAppBar";
 import useChats from "../custom-hooks/react-query/chat/useChats";
 import useScroll from "../custom-hooks/window/useScroll";
+import { useLocation } from "react-router-dom";
 
 interface ChatsProps {}
 
@@ -27,6 +28,7 @@ const Chats: React.FC<ChatsProps> = ({}) => {
         (theme as Theme).breakpoints.up("md")
     );
     const offsetY = useScroll();
+    const { state } = useLocation();
 
     // Data fetching
     const { data: chats } = useChats();
@@ -43,7 +45,7 @@ const Chats: React.FC<ChatsProps> = ({}) => {
 
     // For keeping track of currently active chat
     useEffect(() => {
-        if (chats && chats.length > 0) setSelected(chats[0].id);
+        if (chats && chats.length > 0) setSelected(state.id ?? chats[0].id);
     }, [chats]);
 
     // Compute and find the user who is not the author based on each chat's users array

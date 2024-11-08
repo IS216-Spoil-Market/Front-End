@@ -11,37 +11,41 @@ const ReviewItem: React.FC<ReviewItemProps> = ({ review }) => {
     return (
         <Grid item xs={12} key={review?._id}>
             <Box p={2}>
-                <Grid item xs={2} md={2} textAlign="center">
-                    <img
-                        src={review?.reviewer_id?.picture}
-                        alt="User Profile"
-                        style={{
-                            borderRadius: "50%",
-                            width: "70px",
-                            height: "70px",
-                            objectFit: "cover",
-                        }}
-                    />
-                    <Typography variant="h6">
-                        {review?.reviewer_id?.name}
-                    </Typography>
-                    <Box display="flex" alignItems="center">
-                        <Rating
-                            value={review?.rating}
-                            precision={0.5}
-                            readOnly
+                <Grid item xs={12} md={12} display="flex">
+                    <Grid item xs={2} md={2}>
+                        <img
+                            src={review?.reviewer_id?.picture}
+                            alt="User Profile"
+                            style={{
+                                borderRadius: "50%",
+                                width: "50%",
+                                height: "auto",
+                                objectFit: "cover",
+                            }}
                         />
-                        <Typography
-                            variant="caption"
-                            color="textSecondary"
-                            ml={5}
-                        >
-                            {dayjs(review?.createdAt).format("DD/MM/YYYY")}
+                    </Grid>
+                    <Grid item xs={10} md={10} marginLeft={5}>
+                        <Typography variant="h6">
+                            {review?.reviewer_id?.name}
                         </Typography>
-                    </Box>
-                    <Typography variant="body1" sx={{ mt: 1 }}>
-                        {review?.review_of_user}
-                    </Typography>
+                        <Box display="flex" alignItems="center">
+                            <Rating
+                                value={review?.rating}
+                                precision={0.25}
+                                readOnly
+                            />
+                            <Typography
+                                variant="caption"
+                                color="textSecondary"
+                                ml={5}
+                            >
+                                {dayjs(review?.createdAt).format("DD/MM/YYYY")}
+                            </Typography>
+                        </Box>
+                        <Typography variant="body1" sx={{ mt: 1 }}>
+                            {review?.review_of_user}
+                        </Typography>
+                    </Grid>
                 </Grid>
             </Box>
         </Grid>

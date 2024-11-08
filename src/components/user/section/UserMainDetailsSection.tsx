@@ -1,6 +1,9 @@
 import { Box, Button, Grid, Rating, Typography } from "@mui/material";
 import React, { useMemo } from "react";
 import { UserDetails } from "../../../types/userDetails";
+import { useMutation } from "@tanstack/react-query";
+import { createOrGetChat } from "../../../axios/chat";
+import { useNavigate, useParams } from "react-router-dom";
 
 interface UserMainDetailsSectionProps {
     user: UserDetails;
@@ -11,10 +14,17 @@ const UserMainDetailsSection: React.FC<UserMainDetailsSectionProps> = ({
 }) => {
     const averageRating = useMemo(
         () =>
-            user?.reviews?.reduce((prev, curr) => (prev += curr?.rating), 0) /
-            user?.reviews?.length,
+            Math.round(user?.reviews?.reduce((prev, curr) => (prev += curr?.rating), 0) /
+            user?.reviews?.length * 100)/100,
         [user?.reviews]
     );
+    const {id} = useParams()
+
+    const navigate = useNavigate();
+    const { mutate } = useMutation({
+        mutationFn: (id?: string) => createOrGetChat(id ?? ""),
+        onSuccess: ({ id }) => navigate("/chat", { state: { id } }),
+    });
 
     return (
         <Grid item xs={12} md={2} textAlign="center">
@@ -39,12 +49,17 @@ const UserMainDetailsSection: React.FC<UserMainDetailsSectionProps> = ({
                 mt={1}
                 mb={2}
             >
-                <Rating value={averageRating} precision={0.5} readOnly />
+                <Rating value={averageRating} precision={0.25} readOnly />
                 <Typography variant="body1" sx={{ ml: 1 }}>
                     {averageRating}
                 </Typography>
             </Box>
-            <Button variant="contained" size="large" color="primary">
+            <Button
+                onClick={() => mutate(id)}
+                variant="contained"
+                size="large"
+                color="primary"
+            >
                 Barter Now
             </Button>
         </Grid>

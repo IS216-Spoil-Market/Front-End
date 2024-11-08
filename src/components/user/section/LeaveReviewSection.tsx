@@ -77,6 +77,12 @@ const LeaveReviewSection: React.FC<LeaveReviewSectionProps> = ({}) => {
                                     variant="standard"
                                     label="Your Review"
                                     name="review_of_user"
+                                    multiline
+                                    inputProps={{
+                                        sx: {
+                                            overflow: 'auto'
+                                        }
+                                    }}
                                 />
                             </Grid>
                         </Grid>
