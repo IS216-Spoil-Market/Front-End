@@ -1,18 +1,6 @@
-# React Vite Project Template
+# Swaply
 
-This template contains a common entry point used for a lot of React projects that I will do
-
-## Technologies
-
-- [React Hook Form](https://react-hook-form.com/): For handling complex form states and their necessary processing
-- [Zod](https://zod.dev/): For defining schemas used for validation of forms
-- [Material UI](https://mui.com/material-ui/): UI and icons Library for the application (Configuration of base theming template included!)
-- [React Query by TanStack](https://tanstack.com/query/v3/docs/framework/react/overview): Handles complex network query issues such as caching, prefetching and stale data
-- [Axios](https://axios-http.com/docs/intro): Provides a Promise-based framework to make network calls
-- [React router](https://reactrouter.com/en/main): Provides navigation for our SPA
-- [Notistack](https://notistack.com/): Snackbar provider for the application, will be generally used for error handling and success response relating to network calls or form validations
-
-## How to use this template?
+## Quickstart
 
 ### By cloning
 
@@ -27,29 +15,34 @@ This template contains a common entry point used for a lot of React projects tha
 - Set direction to your current remote with `git remote add origin <your_git_remote>`
 - Push it to your master branch in your remote repository `git push -u origin master`
 
-## Further Configuration to utilize everything in this template
+## Further Configuration
 
 ### Installing dependencies
 
 - Run `bun install` to install all the dependencies (This step requires you to have bun installed globally with `npm install -g bun`)
 - If you wished to run the dev build, run `bun run dev`. If you wished to build for production, run `bun run build` 
 
-### Styling
-
-- Import the font files into `src/assets`
-- Define the colors and fonts in `src/config/theme.ts`
+Note: Replace `bun` with `npm` if you are using `npm`
 
 ### ENV
 
 Create an `.env` file which should contain
-- `VITE_DEVELOPMENT_SERVER`: Value should be URL of the development server
-- `VITE_PRODUCTION_SERVER`: Value should be URL of the production server
+- `VITE_DEVELOPMENT_SERVER`: Value should be URL of the development server (eg: http://localhost:5001)
+- `VITE_PRODUCTION_SERVER`: Value should be URL of the production server (eg: https://back-end-04u0.onrender.com)
+- `VITE_SKILL_API_KEY`: Value should be an API Key from [Skills API](https://apilayer.com/marketplace/skills-api)
+- `VITE_REDIRECT_ORIGIN`: Value should be URL of the location of this application (eg: http://localhost:3000)
 
-### Router
 
-- If the application contains authentication, create `ProtectedRoute` and `PublicRoute` under `src/pages/<folder_name_for_route_protection>`, then configure a custom hook `useProtectedRoute` and `usePublicRoute` to handle state based routing
-- Add in all the necessary pages and route to `src/config/router.tsx`
+### Running the backend
 
-# TA DA!
+This application relies on the backend in this [Github Repository](https://github.com/IS216-Spoil-Market/Back-End) to function properly. Please refer to the README of the backend to use it
 
-That should be it! 😄
+### URL
+
+- Hosted Application: https://dashboard.render.com/static/srv-csf0uv0gph6c73eujad0/deploys/dep-csms86bgbbvc73bhurhg
+- GitHub Remote Repository (SSH): git@github.com:IS216-Spoil-Market/Front-End.git
+- GitHub Remote Repository (HTTPS): https://github.com/IS216-Spoil-Market/Front-End.git
+
+### Additional Comments
+
+- Application instances takes time to spin up after inactivity. Please allow up to 15 minutes for both instances to warm-up for every 1st access of pages with data you have made on the day for the hosted variant (especially the pages that requires data from the backend)
