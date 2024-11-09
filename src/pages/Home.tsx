@@ -28,6 +28,7 @@ import WebDesignImage from "../assets/images/home/skill/web-design.jpg";
 import Logo from "../assets/images/logo/black.png";
 import { injectProfile } from "../axios/client";
 import AppBar from "../components/common/nav/AppBar";
+import { useNavigate } from "react-router-dom";
 
 const Skills = [
     { name: "Web Design", image: WebDesignImage },
@@ -47,6 +48,7 @@ const Skills = [
 
 const Home: React.FC = () => {
     const { user, getAccessTokenSilently, isAuthenticated } = useAuth0();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -317,7 +319,7 @@ const Home: React.FC = () => {
                 <Typography variant="h6" paddingTop={5}>
                     Discover the mentor for the skill you are looking for here!
                 </Typography>
-                <Button variant="contained" color="primary" sx={{ mt: 4 }}>
+                <Button onClick={() => navigate("/user")} variant="contained" color="primary" sx={{ mt: 4 }}>
                     Discover Mentor
                 </Button>
             </Box>
