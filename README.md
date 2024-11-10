@@ -45,4 +45,5 @@ This application relies on the backend in this [Github Repository](https://githu
 
 ### Additional Comments
 
+- You will need to use your gmail account to login. Authentication is not saved in our db, rest assured your password won't be compromised. However do take note that some PIIs are being stored (name and email)
 - Application instances takes time to spin up after inactivity. Please allow up to 15 minutes for both instances to warm-up for every 1st access of pages with data you have made on the day for the hosted variant (especially the pages that requires data from the backend)
