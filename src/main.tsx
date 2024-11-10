@@ -13,7 +13,11 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
         <Auth0Provider
             domain="dev-cxf4lbu8xjigb53k.us.auth0.com"
-            clientId="vQ2LnE1iX6ujx8bRmwQQ1Hm8xGlL0q1r"
+            clientId={
+                import.meta.env.DEV
+                    ? "vQ2LnE1iX6ujx8bRmwQQ1Hm8xGlL0q1r"
+                    : "SdSJ7BeZAIxWV3jkTSRxhVIQ4AFBbwmE"
+            }
             authorizationParams={{
                 redirect_uri: import.meta.env.VITE_REDIRECT_ORIGIN,
                 audience: import.meta.env.DEV
